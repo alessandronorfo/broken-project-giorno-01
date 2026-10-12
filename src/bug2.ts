@@ -14,9 +14,10 @@ const clienti: Customer[] = [
 
 function stampaContatti(customers: Customer[]): void {
   for (const c of customers) {
-    // 🐛 BUG: phone è opzionale (?), può essere undefined
-    // .replace() su undefined → crash a runtime
-    console.log(`${c.firstName} ${c.lastName} — Tel: ${c.phone.replace("+39 ", "0")}`);
+    // ✅ FIX: phone è opzionale (?), quindi può essere undefined (tsc: TS18048).
+    // ?. salta la chiamata se manca, ?? fornisce il testo alternativo.
+    const telefono = c.phone?.replace("+39 ", "0") ?? "non disponibile";
+    console.log(`${c.firstName} ${c.lastName} — Tel: ${telefono}`);
   }
 }
 
