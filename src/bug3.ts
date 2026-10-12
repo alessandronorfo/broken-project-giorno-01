@@ -5,11 +5,14 @@ interface Account {
   balance: number;
 }
 
-// 🐛 BUG: il parametro è "any" → TypeScript non controlla nulla
-function processAccount(account: any) {
+// ✅ FIX: il parametro era "any" e TypeScript non controllava nulla.
+// Con il tipo Account, tsc segnala i campi inesistenti (TS2339):
+// saldoCorrente → sostituito da balance; tipo → rimosso, Account non ha quel campo.
+// Nota: noImplicitAny non basta, blocca solo l'any implicito. Quello esplicito
+// lo trova ESLint con la regola @typescript-eslint/no-explicit-any.
+function processAccount(account: Account): void {
   console.log(`IBAN: ${account.iban}`);
-  console.log(`Saldo: ${account.saldoCorrente}`);  // Campo inesistente! Nessun errore...
-  console.log(`Tipo: ${account.tipo}`);             // Altro campo inesistente!
+  console.log(`Saldo: ${account.balance}`);
 }
 
 const conto: Account = {
