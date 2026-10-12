@@ -10,7 +10,7 @@ const conto: Account = {
   id: "1",
   iban: "IT60X0542811101000000123456",
   balance: 15420.50,
-  status: "ATTIVO",  // 🐛 BUG: "ATTIVO" non è un valore valido
+  status: "ACTIVE", // ✅ FIX: "ATTIVO" non era ammesso dal literal type (TS2322)
 };
 
 function getSaldo(account: Account): number {
